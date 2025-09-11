@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystem.Claw;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 
+import dev.nextftc.bindings.Range;
 import dev.nextftc.core.commands.Command;
 import dev.nextftc.core.components.BindingsComponent;
 import dev.nextftc.core.components.SubsystemComponent;
@@ -13,6 +16,7 @@ import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.ftc.components.BulkReadComponent;
 import dev.nextftc.hardware.driving.MecanumDriverControlled;
 import dev.nextftc.hardware.impl.MotorEx;
+import java.util.function.Supplier;
 
 @TeleOp(name = "NextFTC TeleOp Program Java")
 public class TeleOpProgram extends NextFTCOpMode {
@@ -32,14 +36,15 @@ public class TeleOpProgram extends NextFTCOpMode {
 
     @Override
     public void onStartButtonPressed() {
+
         Command driverControlled = new MecanumDriverControlled(
                 frontLeftMotor,
                 frontRightMotor,
                 backLeftMotor,
                 backRightMotor,
-                Gamepads.gamepad1().leftStickY(),
-                Gamepads.gamepad1().leftStickX(),
-                Gamepads.gamepad1().rightStickX()
+                getDoubleSupplier(Gamepads.gamepad1().leftStickY()),
+                getDoubleSupplier(Gamepads.gamepad1().leftStickX()),
+                getDoubleSupplier(Gamepads.gamepad1().rightStickX())
         );
         driverControlled.schedule();
 
@@ -55,5 +60,20 @@ public class TeleOpProgram extends NextFTCOpMode {
         Gamepads.gamepad2().leftBumper().whenBecomesTrue(
                 Claw.INSTANCE.open.and(Lift.INSTANCE.toLow)
         );
+
+        Gamepads.gamepad1().rightBumper().whenBecomesTrue(
+                driverControlled
+        );
+    }
+
+    @NonNull
+    private static Supplier<Double> getDoubleSupplier(Range range) {
+        return () -> {
+            if (Gamepads.gamepad1().rightBumper().get()) {
+                return range.get() * .5;
+            } else {
+                return range.get();
+            }
+        };
     }
 }
