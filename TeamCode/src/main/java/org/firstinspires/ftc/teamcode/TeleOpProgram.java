@@ -16,6 +16,7 @@ import dev.nextftc.ftc.NextFTCOpMode;
 import dev.nextftc.ftc.components.BulkReadComponent;
 import dev.nextftc.hardware.driving.FieldCentric;
 import dev.nextftc.hardware.driving.MecanumDriverControlled;
+import dev.nextftc.hardware.driving.RobotCentric;
 import dev.nextftc.hardware.impl.Direction;
 import dev.nextftc.hardware.impl.IMUEx;
 import dev.nextftc.hardware.impl.MotorEx;
@@ -41,7 +42,7 @@ public class TeleOpProgram extends NextFTCOpMode {
     @Override
     public void onStartButtonPressed() {
 
-        Gamepads.gamepad1().options().whenBecomesTrue(imu::zero);
+//        Gamepads.gamepad1().options().whenBecomesTrue(imu::zero);
 
 
         Command driverControlled = new MecanumDriverControlled(
@@ -51,9 +52,7 @@ public class TeleOpProgram extends NextFTCOpMode {
                 backRightMotor,
                 getDoubleSupplier(Gamepads.gamepad1().leftStickY()),
                 getDoubleSupplier(Gamepads.gamepad1().leftStickX()),
-                getDoubleSupplier(Gamepads.gamepad1().rightStickX()),
-                new FieldCentric(imu)
-
+                getDoubleSupplier(Gamepads.gamepad1().rightStickX())
         );
         driverControlled.schedule();
 
