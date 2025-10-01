@@ -1,15 +1,23 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import static org.firstinspires.ftc.teamcode.globals.Constants.*;
+
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.globals.FusionRobot;
+import org.firstinspires.ftc.teamcode.globals.Robot;
 
 public class Drive extends SubsystemBase {
 
-    private final FusionRobot robot = FusionRobot.getInstance();
+    private final Robot robot = Robot.getInstance();
     public final MecanumDrive mecanumDrive;
+    private final MotorEx frontRightMotor;
+    private final MotorEx frontLeftMotor;
+    private final MotorEx backLeftMotor;
+    private final MotorEx backRightMotor;
 
     public double getForward() {
         return forward;
@@ -27,9 +35,13 @@ public class Drive extends SubsystemBase {
     private double strafe;
     private double turn;
 
-    public Drive(){
+    public Drive(HardwareMap hwMap){
         // input motors exactly as shown below
-        mecanumDrive = new MecanumDrive(robot.frontLeftMotor, robot.frontRightMotor, robot.backLeftMotor, robot.backRightMotor);
+        this.frontRightMotor = new MotorEx(hwMap, FRONT_RIGHT_MOTOR);
+        this.frontLeftMotor = new MotorEx(hwMap, FRONT_LEFT_MOTOR);
+        this.backLeftMotor = new MotorEx(hwMap, BACK_LEFT_MOTOR);
+        this.backRightMotor = new MotorEx(hwMap, BACK_RIGHT_MOTOR);
+        mecanumDrive = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
     }
 
     public void driveFieldCentric(double forward, double strafe, double turn) {
