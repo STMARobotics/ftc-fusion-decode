@@ -63,5 +63,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
         Bindings.getOperatorGamepad().getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new ServoControlCommand(intake));
+
+
     }
 }

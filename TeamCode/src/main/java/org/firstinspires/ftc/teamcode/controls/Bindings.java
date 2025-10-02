@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.command.button.GamepadButton;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.gamepad.TriggerReader;
 
 import java.util.function.DoubleSupplier;
 
@@ -48,6 +49,14 @@ public class Bindings {
     public static GamepadButton getOperatorButtonA(){
        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.A);
     }
+
+//    public static double getOperatorLeftTrigger(){
+////        GamepadKeys.Trigger.LEFT_TRIGGEr
+//        TriggerReader triggerReader = new TriggerReader(
+//                INSTANCE.operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER
+//        );
+//        triggerReader.
+//    }
 
     public static GamepadEx getDriverGamepad() {
         return INSTANCE.driverGamepad;
