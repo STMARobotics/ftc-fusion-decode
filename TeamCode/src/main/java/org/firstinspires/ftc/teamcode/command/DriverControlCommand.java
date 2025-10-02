@@ -6,6 +6,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.globals.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
+import org.firstinspires.ftc.teamcode.subsystem.Intake;
 
 import java.util.function.DoubleSupplier;
 
@@ -31,6 +32,6 @@ public class DriverControlCommand extends CommandBase {
     @Override
     public void execute() {
         double multiplier = Constants.MINIMUM_SPEED + (1 - Constants.MINIMUM_SPEED) * speedModifier.getAsDouble();
-        this.drive.driveFieldCentric(forward.getAsDouble() * multiplier, strafe.getAsDouble() * multiplier, drive.getTurn() * multiplier);
+        this.drive.driveRobotCentric(forward.getAsDouble() * multiplier, strafe.getAsDouble() * multiplier, drive.getTurn() * multiplier);
     }
 }

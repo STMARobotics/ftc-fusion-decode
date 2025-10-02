@@ -50,6 +50,12 @@ public class Drive extends SubsystemBase {
         this.turn = turn;
         this.mecanumDrive.driveFieldCentric(forward, strafe, turn, getHeading(), false);
     }
+    public void driveRobotCentric(double forward, double strafe, double turn){
+        this.forward = forward;
+        this.strafe = strafe;
+        this.turn = turn;
+        this.mecanumDrive.driveRobotCentric(forward, strafe, turn);
+    }
 
     public double getHeading() {
         return robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
