@@ -4,12 +4,10 @@ import com.seattlesolvers.solverslib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 
-import java.util.function.DoubleSupplier;
-
-public class ServoControlCommand extends CommandBase {
+public class IntakeSpinCommand extends CommandBase {
     private final Intake intake;
 
-    public ServoControlCommand(Intake intake) {
+    public IntakeSpinCommand(Intake intake) {
         this.intake = intake;
         addRequirements(this.intake);
     }

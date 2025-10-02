@@ -22,4 +22,7 @@ public class Intake extends SubsystemBase {
 
     }
 
+    public void stop() {
+
+    }
 }

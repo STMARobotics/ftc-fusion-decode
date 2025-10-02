@@ -6,11 +6,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
 import org.firstinspires.ftc.teamcode.command.DriverControlCommand;
-import org.firstinspires.ftc.teamcode.command.ServoControlCommand;
+import org.firstinspires.ftc.teamcode.command.IntakeSpinCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -61,9 +60,8 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
                 Bindings.getDriverRightTrigger()
         ));
 
-        Bindings.getOperatorGamepad().getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new ServoControlCommand(intake));
-
+        Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
+        Bindings.getOperatorLeftTrigger().whenInactive()
 
     }
 }

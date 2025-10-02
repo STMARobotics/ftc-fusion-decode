@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.controls;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.seattlesolvers.solverslib.command.button.GamepadButton;
+import com.seattlesolvers.solverslib.command.button.Trigger;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.gamepad.TriggerReader;
@@ -15,11 +16,10 @@ public class Bindings {
 
     private static Bindings INSTANCE;
 
-    public static Bindings init(Gamepad driverGamepad, Gamepad operatorGamepad) {
+    public static void init(Gamepad driverGamepad, Gamepad operatorGamepad) {
         if (INSTANCE == null) {
             INSTANCE = new Bindings(new GamepadEx(driverGamepad), new GamepadEx(operatorGamepad));
         }
-        return INSTANCE;
     }
     private Bindings(GamepadEx driverGamepad, GamepadEx operatorGamepad) {
         this.driverGamepad = driverGamepad;
@@ -50,13 +50,12 @@ public class Bindings {
        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.A);
     }
 
-//    public static double getOperatorLeftTrigger(){
-////        GamepadKeys.Trigger.LEFT_TRIGGEr
-//        TriggerReader triggerReader = new TriggerReader(
-//                INSTANCE.operatorGamepad, GamepadKeys.Trigger.LEFT_TRIGGER
-//        );
-//        triggerReader.
-//    }
+    public static Trigger getOperatorLeftTrigger(){
+        return new Trigger(() -> {
+            double value = INSTANCE.operatorGamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+            return value > .01 || value < -.01;
+        });
+    }
 
     public static GamepadEx getDriverGamepad() {
         return INSTANCE.driverGamepad;
