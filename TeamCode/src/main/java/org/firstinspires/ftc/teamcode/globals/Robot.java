@@ -10,6 +10,7 @@ import com.seattlesolvers.solverslib.util.TelemetryData;
 
 import org.firstinspires.ftc.teamcode.command.DriverControlCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeSpinCommand;
+import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -61,7 +62,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         ));
 
         Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
-        Bindings.getOperatorLeftTrigger().whenInactive()
+        Bindings.getOperatorLeftTrigger().whenInactive(new IntakeStopCommand(intake));
 
     }
 }
