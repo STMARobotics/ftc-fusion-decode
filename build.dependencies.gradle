@@ -1,6 +1,7 @@
 repositories {
     mavenCentral()
     google() // Needed for androidx
+    maven { url 'https://jitpack.io' } // For SolversLib
 }
 
 dependencies {

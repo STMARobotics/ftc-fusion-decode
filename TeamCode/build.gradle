@@ -23,8 +23,18 @@ android {
     }
 }
 
+repositories {
+    maven {url "https://repo.dairy.foundation/releases"}
+    maven {url 'https://repo.dairy.foundation/snapshots'}
+    maven { url 'https://maven.pedropathing.com'}
+}
 dependencies {
     implementation project(':FtcRobotController')
-    implementation 'dev.nextftc:ftc:1.0.0'
-    implementation 'dev.nextftc:hardware:1.0.0' // If you would like to use the hardware module
+
+//    Solverslib
+    implementation "org.solverslib:core:SNAPSHOT-7cdcc66"
+//    implementation "org.solverslib:pedropathing:SNAPSHOT-7cdcc66"
+
+//    Pedropathing
+
 }
