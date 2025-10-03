@@ -4,102 +4,99 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an FTC (FIRST Tech Challenge) robotics project for the DECODE (2025-2026) competition season. It uses the NextFTC framework built on top of the standard FTC SDK for command-based robot programming with the SolversLib library integration.
+This is an FTC (FIRST Tech Challenge) robotics project for the DECODE (2025-2026) competition season, built on the FTC SDK. The project uses a command-based architecture with the Solverslib framework and implements a mecanum drive system with subsystem-based organization.
 
-## Build System and Commands
+## Build System and Development Commands
 
-This project uses Gradle with Android Studio for building:
+### Building the Project
+- **Build debug APK**: `./gradlew assembleDebug`
+- **Build release APK**: `./gradlew assembleRelease`
+- **Install to device**: `./gradlew installDebug`
+- **Clean build**: `./gradlew clean`
 
-### Essential Build Commands
-```bash
-# Build the project
-./gradlew build
+### Android Studio Setup
+- Requires Android Studio Ladybug (2024.2) or later
+- Import project using "Import project (Eclipse ADT, Gradle, etc.)"
+- Uses Gradle with Android plugin 8.13.0
+- Target SDK: 28, Min SDK: 24, Compile SDK: 30
 
-# Build and install to connected device
-./gradlew installDebug
+### Gradle Configuration
+- Main build file: `build.gradle` (rarely modified)
+- Team customizations go in `TeamCode/build.gradle`
+- Common build logic in `build.common.gradle`
+- Dependencies managed in `build.dependencies.gradle`
 
-# Clean build artifacts
-./gradlew clean
-```
+## Code Architecture
 
 ### Project Structure
-- **FtcRobotController/**: Standard FTC SDK module containing the robot controller app
-- **TeamCode/**: Team-specific robot code module where all custom development happens
-- **build.gradle**: Root build configuration
-- **build.common.gradle**: Shared Android configuration for FTC projects
-- **build.dependencies.gradle**: Dependency management
+- **FtcRobotController/**: Core FTC SDK module with sample OpModes
+- **TeamCode/**: Custom team code following command-based architecture
+  - `globals/`: Robot singleton and constants
+  - `subsystem/`: Hardware subsystems (Drive, Intake)
+  - `command/`: Command implementations
+  - `controls/`: Gamepad bindings and input handling
+  - `opMode/`: OpMode implementations
 
-## Architecture
+### Core Architecture Patterns
 
-### Framework Stack
-1. **FTC SDK**: Base Android framework for FTC robotics
-2. **NextFTC**: Command-based framework layered on FTC SDK
-3. **SolversLib**: Additional robotics utilities (version 0.3.2)
+#### Command-Based Framework
+- Uses **Solverslib** command framework (`com.seattlesolvers.solverslib`)
+- `Robot.java` is singleton pattern extending `com.seattlesolvers.solverslib.command.Robot`
+- Subsystems extend `SubsystemBase`
+- Commands extend `CommandBase`
+- OpModes extend `CommandOpMode`
+
+#### Robot Initialization Pattern
+```java
+Constants.OP_MODE_TYPE = Constants.OpModeType.TELEOP; // or AUTO
+super.reset(); // Reset command scheduler
+robot.init(this); // Initialize robot singleton
+```
+
+#### Subsystem Registration
+All subsystems must be registered in `Robot.init()`:
+```java
+register(drive, intake);
+```
 
 ### Key Components
-- **NextFTCOpMode**: Base class for OpModes using the NextFTC framework
-- **Robot**: Base robot class (extended by FusionRobot)
-- **Subsystems**: Modular robot components (Claw, Lift, etc.)
-- **Commands**: Actions that can be scheduled and run on subsystems
 
-### Code Organization
-```
-TeamCode/src/main/java/org/firstinspires/ftc/teamcode/
-├── command/
-│   └── FusionRobot.java          # Main robot class
-├── subsystem/
-│   ├── Claw.java                 # Claw subsystem with servo control
-│   └── Lift.java                 # Lift subsystem
-├── TeleOpProgram.java            # Teleop control program
-└── AutonomousProgram.java        # Autonomous program
-```
+#### Robot Singleton (`globals/Robot.java`)
+- Central hardware and subsystem management
+- IMU initialization with proper orientation
+- Command binding for TeleOp mode
+- Telemetry data management
 
-### Programming Patterns
-- **Singleton Pattern**: Subsystems use static INSTANCE fields
-- **Command Pattern**: Actions are encapsulated as Command objects
-- **Component System**: OpModes use component-based architecture
-- **Fluent API**: Hardware configuration uses method chaining
+#### Drive Subsystem (`subsystem/Drive.java`)
+- Mecanum drive implementation using Solverslib
+- Field-centric and robot-centric drive modes
+- Motor configuration: FL, FR, BL, BR pattern
+- IMU-based heading for field-centric driving
 
-### Hardware Integration
-- **MotorEx**: Enhanced motor control with built-in direction reversal
-- **ServoEx**: Enhanced servo control 
-- **MecanumDriverControlled**: Pre-built mecanum drive control
-- **Gamepads**: Unified gamepad input handling
+#### Controls System (`controls/Bindings.java`)
+- Singleton pattern for gamepad management
+- Wraps gamepads with `GamepadEx` from Solverslib
+- Static methods for accessing controls throughout codebase
+- Trigger-based input handling
 
-### Sample Implementation Pattern
-```java
-@TeleOp(name = "My OpMode")
-public class MyOpMode extends NextFTCOpMode {
-    public MyOpMode() {
-        addComponents(
-            new SubsystemComponent(MySubsystem.INSTANCE),
-            BulkReadComponent.INSTANCE,
-            BindingsComponent.INSTANCE
-        );
-    }
-    
-    @Override
-    public void onStartButtonPressed() {
-        // Schedule commands here
-    }
-}
-```
+#### Constants Management (`globals/Constants.java`)
+- Centralized configuration values
+- OpMode type tracking (AUTO/TELEOP)
+- Hardware device names
+- Speed and behavior constants
 
-## Development Notes
+### Hardware Configuration Requirements
+- IMU must be named "imu" in hardware configuration
+- Motors: "FrontRightMotor", "FrontLeftMotor", "BackLeftMotor", "BackRightMotor"
+- Servos: "torque", "speed" (for intake system)
 
 ### Dependencies
-- The project uses SolversLib version 0.3.2 for additional robotics functionality
-- NextFTC framework is the primary development framework
-- Standard FTC SDK 11.0 provides the base Android robotics platform
+- **FtcRobotController**: Core FTC SDK dependency
+- **Solverslib**: `org.solverslib:core:SNAPSHOT-7cdcc66` for command framework
+- **PedroPathing**: Available but commented out in dependencies
 
-### Build Configuration
-- Minimum SDK version: 24
-- Target SDK version: 28 (intentionally older for FTC compatibility)
-- Java version: 1.8
-- NDK version: 21.3.6528147
-- Supports both debug and release builds with proper signing
-
-### Hardware Configuration
-- Robot uses mecanum drive with 4 motors (front_left, front_right, back_left, back_right)
-- Subsystems include Claw (servo-based) and Lift
-- Gamepad controls include speed reduction via right bumper (50% speed)
+### Development Notes
+- Command binding only occurs in TELEOP mode
+- Default commands must be set for subsystems requiring continuous control
+- Periodic telemetry updates handled automatically via `TelemetryData`
+- Field-centric drive uses IMU yaw for orientation

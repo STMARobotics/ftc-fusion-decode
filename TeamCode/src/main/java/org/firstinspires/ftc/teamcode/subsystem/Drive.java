@@ -35,6 +35,10 @@ public class Drive extends SubsystemBase {
     private double strafe;
     private double turn;
 
+    private int setValueCount = 0;
+
+    private int displayCount = 0;
+
     public Drive(HardwareMap hwMap){
         // input motors exactly as shown below
         this.frontRightMotor = new MotorEx(hwMap, FRONT_RIGHT_MOTOR);
@@ -51,6 +55,7 @@ public class Drive extends SubsystemBase {
         this.mecanumDrive.driveFieldCentric(forward, strafe, turn, getHeading(), false);
     }
     public void driveRobotCentric(double forward, double strafe, double turn){
+        this.setValueCount++;
         this.forward = forward;
         this.strafe = strafe;
         this.turn = turn;
@@ -63,9 +68,13 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (setValueCount % 25 == 0) {
+            displayCount = setValueCount;
+        }
         robot.telemetryData.addData("Heading", this.getHeading());
         robot.telemetryData.addData("Drive - Forward", this.getForward());
         robot.telemetryData.addData("Drive - Strafe", this.getStrafe());
         robot.telemetryData.addData("Drive - Turn", this.getTurn());
+        robot.telemetryData.addData("Times Set", displayCount);
     }
 }
