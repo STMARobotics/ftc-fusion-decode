@@ -32,6 +32,14 @@ public class DriverControlCommand extends CommandBase {
     @Override
     public void execute() {
         double multiplier = Constants.MINIMUM_SPEED + (1 - Constants.MINIMUM_SPEED) * speedModifier.getAsDouble();
-        this.drive.driveRobotCentric(forward.getAsDouble() * multiplier, strafe.getAsDouble() * multiplier, drive.getTurn() * multiplier);
+        System.out.println("Calling Drive with values " + forward.getAsDouble() + " " + strafe.getAsDouble() + " " + turn.getAsDouble() + " and multiplier " + multiplier);
+        this.drive.driveRobotCentric(- forward.getAsDouble() * multiplier, strafe.getAsDouble() * multiplier, - turn.getAsDouble() * multiplier);
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        System.out.println("IS FINISHED WAS CALLED FOR DriverControlCommand");
+        return super.isFinished();
     }
 }

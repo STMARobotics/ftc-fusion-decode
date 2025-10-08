@@ -13,7 +13,7 @@ public class Constants {
     public static OpModeType OP_MODE_TYPE;
     public static AllianceColor ALLIANCE_COLOR = AllianceColor.BLUE;
 
-    public static final double MINIMUM_SPEED = 0.3;
+    public static final double MINIMUM_SPEED = 0.5;
 
     // Hardware Names
     public static final String FRONT_RIGHT_MOTOR = "FrontRightMotor";

@@ -22,8 +22,8 @@ public class Intake extends SubsystemBase {
         this.speedServo.setRunMode(CRServoEx.RunMode.RawPower);
     }
     public void spin(){
-        speedServo.set(1);
-        torqueServo.set(1);
+        speedServo.set(-1);
+        torqueServo.set(-1);
     }
 
     public void stop() {
