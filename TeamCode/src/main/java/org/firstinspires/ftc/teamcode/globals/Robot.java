@@ -4,7 +4,9 @@ package org.firstinspires.ftc.teamcode.globals;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
+import com.seattlesolvers.solverslib.command.CommandScheduler;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
@@ -33,18 +35,20 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
     public void init(CommandOpMode opMode) {
         reset();
-        this.telemetryData =new TelemetryData(opMode.telemetry);
+        this.telemetryData = new TelemetryData(opMode.telemetry);
         HardwareMap hwMap = opMode.hardwareMap;
         Bindings.init(opMode.gamepad1, opMode.gamepad2);
         imu = hwMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
-        drive = new Drive(hwMap);
+        this.drive = new Drive(hwMap);
+        this.intake = new Intake(hwMap);
+
+        register(drive, intake);
 
         if (Constants.OP_MODE_TYPE == Constants.OpModeType.TELEOP) {
             bindCommands();
         }
 
-        register(drive, intake);
     }
 
 
@@ -54,12 +58,17 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
                     imu.resetYaw();
                 }));
 
-        drive.setDefaultCommand(new DriverControlCommand(drive,
-                Bindings.getDriverLeftX() ,
-                Bindings.getDriverLeftY() ,
+        DriverControlCommand dcc = new DriverControlCommand(drive,
+                Bindings.getDriverLeftY(),
+                Bindings.getDriverLeftX(),
                 Bindings.getDriverRightX(),
                 Bindings.getDriverRightTrigger()
-        ));
+
+        );
+
+//        this.schedule(dcc);
+        this.drive.setDefaultCommand(dcc);
+//        CommandScheduler.getInstance().setDefaultCommand(this.drive, dcc);
 
         Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
         Bindings.getOperatorLeftTrigger().whenInactive(new IntakeStopCommand(intake));

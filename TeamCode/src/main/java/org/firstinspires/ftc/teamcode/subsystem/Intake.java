@@ -10,19 +10,24 @@ import org.firstinspires.ftc.teamcode.globals.Robot;
 
 public class Intake extends SubsystemBase {
     private final Robot robot = Robot.getInstance();
-    private CRServoEx torque;
-    public  CRServoEx speed;
+    private final CRServoEx torqueServo;
+    public  CRServoEx speedServo;
 
     public static final int SPIN_SPEED = 10;
     public Intake (HardwareMap hwMap){
-        this.torque = new CRServoEx(hwMap, TORQUE);
-        this.speed = new CRServoEx(hwMap,SPEED);
+        this.torqueServo = new CRServoEx(hwMap, TORQUE);
+        this.speedServo = new CRServoEx(hwMap,SPEED);
+
+        this.torqueServo.setRunMode(CRServoEx.RunMode.RawPower);
+        this.speedServo.setRunMode(CRServoEx.RunMode.RawPower);
     }
     public void spin(){
-
+        speedServo.set(-1);
+        torqueServo.set(-1);
     }
 
     public void stop() {
-
+        speedServo.set(0);
+        torqueServo.set(0);
     }
 }

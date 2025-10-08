@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.globals.Constants.*;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
+import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -54,7 +55,14 @@ public class Drive extends SubsystemBase {
         this.forward = forward;
         this.strafe = strafe;
         this.turn = turn;
-        this.mecanumDrive.driveRobotCentric(forward, strafe, turn);
+
+        robot.telemetryData.addData("Heading", this.getHeading());
+        robot.telemetryData.addData("Drive - Forward", this.getForward());
+        robot.telemetryData.addData("Drive - Strafe", this.getStrafe());
+        robot.telemetryData.addData("Drive - Turn", this.getTurn());
+
+        this.mecanumDrive.driveRobotCentric(this.strafe, this.forward, this.turn);
+
     }
 
     public double getHeading() {
@@ -63,9 +71,6 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        robot.telemetryData.addData("Heading", this.getHeading());
-        robot.telemetryData.addData("Drive - Forward", this.getForward());
-        robot.telemetryData.addData("Drive - Strafe", this.getStrafe());
-        robot.telemetryData.addData("Drive - Turn", this.getTurn());
+
     }
 }
