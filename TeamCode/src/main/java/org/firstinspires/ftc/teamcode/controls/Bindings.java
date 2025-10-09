@@ -57,6 +57,13 @@ public class Bindings {
         });
     }
 
+    public static Trigger getOperatorRightTrigger(){
+        return new Trigger(() -> {
+            double value = INSTANCE.operatorGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            return value > .01 || value < -.01;
+        });
+    }
+
     public static GamepadEx getDriverGamepad() {
         return INSTANCE.driverGamepad;
     }
