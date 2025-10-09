@@ -13,9 +13,12 @@ import com.seattlesolvers.solverslib.util.TelemetryData;
 import org.firstinspires.ftc.teamcode.command.DriverControlCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeSpinCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
+import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
+import org.firstinspires.ftc.teamcode.command.ShooterStopCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.subsystem.Shooter;
 
 public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
@@ -28,6 +31,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
     // Subsystems
     public Drive drive;
     public Intake intake;
+    public Shooter shooter;
 
     public static Robot getInstance() {
         return instance;
@@ -42,8 +46,9 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
         this.drive = new Drive(hwMap);
         this.intake = new Intake(hwMap);
+        this.shooter = new Shooter(hwMap);
 
-        register(drive, intake);
+        register(drive, intake, shooter);
 
         if (Constants.OP_MODE_TYPE == Constants.OpModeType.TELEOP) {
             bindCommands();
@@ -72,6 +77,9 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
         Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
         Bindings.getOperatorLeftTrigger().whenInactive(new IntakeStopCommand(intake));
+        Bindings.getOperatorRightTrigger().whenActive(new ShooterFireCommand(shooter));
+        Bindings.getOperatorRightTrigger().whenInactive(new ShooterStopCommand(shooter));
+
 
     }
 }
