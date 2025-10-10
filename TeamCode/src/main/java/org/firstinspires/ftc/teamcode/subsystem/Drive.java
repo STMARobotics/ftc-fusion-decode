@@ -73,4 +73,8 @@ public class Drive extends SubsystemBase {
     public void periodic() {
 
     }
+
+    public void stop() {
+        this.driveRobotCentric(0,0,0);
+    }
 }

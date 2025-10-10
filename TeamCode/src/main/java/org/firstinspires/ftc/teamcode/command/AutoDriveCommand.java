@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Drive;
 
 public class AutoDriveCommand extends CommandBase {
     private final Double driveTime;
-    private Drive drive;
+    private final Drive drive;
     private long startTimeMillis;
 
     public AutoDriveCommand(Drive drive, Double driveTime) {
@@ -29,11 +29,13 @@ public class AutoDriveCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        super.end(interrupted);
+        this.drive.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        long currentTimeMillis = System.currentTimeMillis();
+        double endTime = startTimeMillis + (driveTime *1000);
+        return currentTimeMillis >= endTime;
     }
 }
