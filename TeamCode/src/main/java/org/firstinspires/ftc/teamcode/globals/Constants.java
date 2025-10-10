@@ -18,6 +18,7 @@ public class Constants {
     public static final double INTAKE_STOP = 0;
     public static final double SHOOTER_SPEED = 1;
     public static final double SHOOTER_STOP = 0;
+    public static long SHOOTER_TIME = 1000;
 
     // Hardware Names
     public static final String FRONT_RIGHT_MOTOR = "FrontRightMotor";
@@ -28,5 +29,7 @@ public class Constants {
     public static final String TORQUE = "torque";
     public static final String  SPEED = "speed";
 
-    public static final String SHOOTER = "shooterMotor";
+    public static final String SHOOTER_MOTOR = "shooterMotor";
+    public static final String SHOOTER_SERVO = "shooterServo";
+
 }

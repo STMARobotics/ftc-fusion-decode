@@ -4,9 +4,7 @@ package org.firstinspires.ftc.teamcode.globals;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
-import com.seattlesolvers.solverslib.command.CommandScheduler;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
@@ -14,7 +12,6 @@ import org.firstinspires.ftc.teamcode.command.DriverControlCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeSpinCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
 import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
-import org.firstinspires.ftc.teamcode.command.ShooterStopCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -71,15 +68,15 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
         );
 
-//        this.schedule(dcc);
+
         this.drive.setDefaultCommand(dcc);
-//        CommandScheduler.getInstance().setDefaultCommand(this.drive, dcc);
 
         Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
         Bindings.getOperatorLeftTrigger().whenInactive(new IntakeStopCommand(intake));
-        Bindings.getOperatorRightTrigger().whenActive(new ShooterFireCommand(shooter));
-        Bindings.getOperatorRightTrigger().whenInactive(new ShooterStopCommand(shooter));
-
+        ShooterFireCommand fireCommand = new ShooterFireCommand(shooter);
+        Bindings.getOperatorRightTrigger().whenActive(fireCommand);
+        Bindings.getOperatorRightTrigger().whenInactive(new InstantCommand(fireCommand::stop));
+x
 
     }
 }
