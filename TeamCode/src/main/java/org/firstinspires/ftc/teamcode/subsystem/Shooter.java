@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.globals.Robot;
 public class Shooter extends SubsystemBase {
     private final Robot robot = Robot.getInstance();
     private final MotorEx shooterMotor;
-    private CRServoEx shooterServo;
+    private final CRServoEx shooterServo;
 
     public Shooter(HardwareMap hwmap) {
         this.shooterMotor = new MotorEx(hwmap, SHOOTER_MOTOR);

@@ -76,7 +76,6 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         ShooterFireCommand fireCommand = new ShooterFireCommand(shooter);
         Bindings.getOperatorRightTrigger().whenActive(fireCommand);
         Bindings.getOperatorRightTrigger().whenInactive(new InstantCommand(fireCommand::stop));
-x
 
     }
 }
