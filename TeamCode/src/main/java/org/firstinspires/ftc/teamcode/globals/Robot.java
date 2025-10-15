@@ -35,6 +35,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
     }
 
     public void init(CommandOpMode opMode) {
+        System.out.println("MOLLIE: Init for the ROBOT");
         reset();
         this.telemetryData = new TelemetryData(opMode.telemetry);
         HardwareMap hwMap = opMode.hardwareMap;

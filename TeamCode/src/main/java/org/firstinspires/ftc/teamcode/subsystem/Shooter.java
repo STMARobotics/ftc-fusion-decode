@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
         shooterMotor.set(SHOOTER_SPEED);
     }
     public void spinServo(){
-        shooterServo.set(INTAKE_SPEED);
+        shooterServo.set(-INTAKE_SPEED);
     }
 
     public void stop(){
