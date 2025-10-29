@@ -31,7 +31,7 @@ public class Auto extends CommandOpMode {
     @Override
     public void run() {
         // DO NOT REMOVE ANY LINES BELOW! Runs the command scheduler and updates telemetry
-        schedule(new AutoDriveCommand(Robot.getInstance().drive, 1.5));
+        schedule(new AutoDriveCommand(Robot.getInstance().drive, 0.5));
         super.run();
         telemetryData.update();
     }

@@ -23,7 +23,7 @@ public class AutoDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        this.drive.driveRobotCentric(0.5,0,0);
+        this.drive.driveRobotCentric(0.25,0,0);
 
     }
 

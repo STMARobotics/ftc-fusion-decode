@@ -63,6 +63,9 @@ public class Bindings {
             return value > .01 || value < -.01;
         });
     }
+    public static GamepadButton getOperatorLeftBumper(){
+        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
+    }
 
     public static GamepadEx getDriverGamepad() {
         return INSTANCE.driverGamepad;

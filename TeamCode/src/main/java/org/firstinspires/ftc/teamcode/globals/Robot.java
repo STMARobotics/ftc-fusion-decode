@@ -9,7 +9,8 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
 import org.firstinspires.ftc.teamcode.command.DriverControlCommand;
-import org.firstinspires.ftc.teamcode.command.IntakeSpinCommand;
+import org.firstinspires.ftc.teamcode.command.IntakeSpinInCommand;
+import org.firstinspires.ftc.teamcode.command.IntakeSpinOutCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
 import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
@@ -72,8 +73,10 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
 
         this.drive.setDefaultCommand(dcc);
 
-        Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinCommand(intake));
+        Bindings.getOperatorLeftTrigger().whenActive(new IntakeSpinInCommand(intake));
         Bindings.getOperatorLeftTrigger().whenInactive(new IntakeStopCommand(intake));
+        Bindings.getOperatorLeftBumper().whenPressed(new IntakeSpinOutCommand(intake));
+        Bindings.getOperatorLeftBumper().whenReleased(new IntakeStopCommand(intake));
         ShooterFireCommand fireCommand = new ShooterFireCommand(shooter);
         Bindings.getOperatorRightTrigger().whenActive(fireCommand);
         Bindings.getOperatorRightTrigger().whenInactive(new InstantCommand(fireCommand::stop));

@@ -4,10 +4,10 @@ import com.seattlesolvers.solverslib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 
-public class IntakeSpinCommand extends CommandBase {
+public class IntakeSpinInCommand extends CommandBase {
     private final Intake intake;
 
-    public IntakeSpinCommand(Intake intake) {
+    public IntakeSpinInCommand(Intake intake) {
         this.intake = intake;
         addRequirements(this.intake);
     }
@@ -15,7 +15,7 @@ public class IntakeSpinCommand extends CommandBase {
 
     @Override
     public void execute() {
-        intake.spin();
+        intake.spinIntake();
     }
 
     @Override

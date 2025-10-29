@@ -14,7 +14,7 @@ public class Constants {
     public static AllianceColor ALLIANCE_COLOR = AllianceColor.BLUE;
 
     public static final double MINIMUM_SPEED = 0.5;
-    public static final double INTAKE_SPEED = -1;
+    public static final double INTAKE_SPEED = 1;
     public static final double INTAKE_STOP = 0;
     public static final double SHOOTER_SPEED = -0.75;
     public static final double SHOOTER_STOP = 0;
