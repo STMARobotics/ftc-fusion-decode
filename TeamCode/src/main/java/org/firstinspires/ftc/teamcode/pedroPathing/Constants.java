@@ -33,7 +33,14 @@ public class Constants {
             .leftFrontEncoderDirection(Encoder.FORWARD)
             .leftRearEncoderDirection(Encoder.FORWARD)
             .rightFrontEncoderDirection(Encoder.FORWARD)
-            .rightRearEncoderDirection(Encoder.FORWARD);
+            .rightRearEncoderDirection(Encoder.FORWARD)
+            .robotWidth(14)
+            .robotLength(15)
+            .forwardTicksToInches(0.02430243475)
+            .strafeTicksToInches(-0.1716384068)
+            .turnTicksToInches(-0.1402747709);
+
+
     public static FollowerConstants followerConstants = new FollowerConstants();
 
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
