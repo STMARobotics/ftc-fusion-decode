@@ -1,15 +1,18 @@
 package org.firstinspires.ftc.teamcode.opMode;
 
+import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
+import com.seattlesolvers.solverslib.command.RunCommand;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
 import org.firstinspires.ftc.teamcode.command.AutoDriveCommand;
-import org.firstinspires.ftc.teamcode.command.FollowPathCommand;
+//import org.firstinspires.ftc.teamcode.command.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.globals.Constants;
 import org.firstinspires.ftc.teamcode.globals.Robot;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
@@ -37,12 +40,15 @@ public class Auto extends CommandOpMode {
         myPath = robot.drive.pathBuilder()
                 .addPath(new BezierLine(startPose, endPose))
                 .build();
+        Follower follower = robot.drive.getFollower();
+        schedule(
+                new RunCommand(follower::update),
+                new FollowPathCommand(follower, myPath, .05));
     }
 
     @Override
     public void run() {
         // DO NOT REMOVE ANY LINES BELOW! Runs the command scheduler and updates telemetry
-        schedule(new FollowPathCommand(startPose, myPath, robot.drive));
         super.run();
         telemetryData.update();
     }
