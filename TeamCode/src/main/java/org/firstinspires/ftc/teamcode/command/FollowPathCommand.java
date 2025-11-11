@@ -19,10 +19,42 @@ public class FollowPathCommand extends CommandBase{
            Pose startPose,
            PathChain pathChain,
            Drive drive){
-       this.follower = drive./*getFollower*/();
+       this.follower = drive.getFollower();
        this.pathChain = pathChain;
        this.startPose = startPose;
-   }
+       this.drive = drive;
 
+       addRequirements(drive);
+
+   }
+   public FollowPathCommand withGlobalMaxPower(double globalMaxPower){
+      maxPower = globalMaxPower;
+      return this;
     }
+    public FollowPathCommand withHoldEnd(boolean holdEnd){
+       this.holdEnd = holdEnd;
+       return this;
+    }
+
+    @Override
+    public void initialize(){
+       follower.setStartingPose(startPose);
+       follower.setPose(startPose);
+       follower.setMaxPower(maxPower);
+       if (maxPower != 1.0){
+           follower.followPath(pathChain, maxPower, true);
+       } else {
+           follower.followPath(pathChain, true);
+       }
+    }
+    @Override
+    public boolean isFinished() {
+        return !follower.isBusy();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drive.stop();
+    }
+}
 
