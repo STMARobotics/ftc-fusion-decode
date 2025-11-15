@@ -35,25 +35,10 @@ public class Constants {
             .rightRearMotorName(BACK_RIGHT_MOTOR)
             .leftRearMotorName(BACK_LEFT_MOTOR)
             .leftFrontMotorName(FRONT_LEFT_MOTOR)
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
-
-//    public static DriveEncoderConstants localizerConstants = new DriveEncoderConstants()
-//            .rightFrontMotorName(FRONT_RIGHT_MOTOR)
-//            .rightRearMotorName(BACK_RIGHT_MOTOR)
-//            .leftRearMotorName(BACK_LEFT_MOTOR)
-//            .leftFrontMotorName(FRONT_LEFT_MOTOR)
-//            .leftFrontEncoderDirection(Encoder.REVERSE)
-//            .leftRearEncoderDirection(Encoder.REVERSE)
-//            .rightFrontEncoderDirection(Encoder.FORWARD)
-//            .rightRearEncoderDirection(Encoder.FORWARD)
-//            .robotWidth(14)
-//            .robotLength(15)
-//            .forwardTicksToInches(0.005522348447)
-//            .strafeTicksToInches(-0.009327752725)
-//            .turnTicksToInches(-0.0140852695);
+            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE);
 
 
     public static FollowerConstants followerConstants = new FollowerConstants();

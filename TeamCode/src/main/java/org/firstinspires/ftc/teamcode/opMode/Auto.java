@@ -28,7 +28,7 @@ public class Auto extends CommandOpMode {
     private PathChain myPath;
     @Override
     public void initialize() {
-        // Must have for all opModes
+        // Must have for all opModes\
         Constants.OP_MODE_TYPE = Constants.OpModeType.AUTO;
 
         // Resets the command scheduler
