@@ -10,6 +10,7 @@ import com.pedropathing.ftc.localization.Encoder;
 import com.pedropathing.ftc.localization.constants.DriveEncoderConstants;
 import com.pedropathing.ftc.localization.constants.OTOSConstants;
 import com.pedropathing.paths.PathConstraints;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,8 +25,9 @@ public class Constants {
                 .hardwareMapName("Spark")
                 .linearUnit(DistanceUnit.INCH)
                 .angleUnit(AngleUnit.RADIANS)
-                .linearScalar(0.005522348447)
-                .angularScalar(-0.0140852695);
+                .offset(new SparkFunOTOS.Pose2D(1, -5, Math.toRadians(90)))
+                .linearScalar(97.44084292682993)
+                .angularScalar(-0.9842570182);
 
     }
 
@@ -35,10 +37,10 @@ public class Constants {
             .rightRearMotorName(BACK_RIGHT_MOTOR)
             .leftRearMotorName(BACK_LEFT_MOTOR)
             .leftFrontMotorName(FRONT_LEFT_MOTOR)
-            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE);
+            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
 
 
     public static FollowerConstants followerConstants = new FollowerConstants();
