@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.globals;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -35,8 +36,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         return instance;
     }
 
-    public void init(CommandOpMode opMode) {
-        System.out.println("MOLLIE: Init for the ROBOT");
+    public void init(OpMode opMode) {
         reset();
         this.telemetryData = new TelemetryData(opMode.telemetry);
         HardwareMap hwMap = opMode.hardwareMap;

@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.changes;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.drawOnlyCurrent;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.draw;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
+import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.robot;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.stopRobot;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.telemetryM;
 
@@ -23,6 +24,14 @@ import com.pedropathing.telemetry.SelectableOpMode;
 import com.pedropathing.util.*;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.seattlesolvers.solverslib.command.InstantCommand;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
+
+import org.firstinspires.ftc.teamcode.command.IntakeSpinOutCommand;
+import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
+import org.firstinspires.ftc.teamcode.controls.Bindings;
+import org.firstinspires.ftc.teamcode.globals.Robot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +46,8 @@ import java.util.List;
 @TeleOp(name = "Tuning", group = "Pedro Pathing")
 public class Tuning extends SelectableOpMode {
     public static Follower follower;
+
+    public static Robot robot;
 
     @IgnoreConfigurable
     static PoseHistory poseHistory;
@@ -54,6 +65,7 @@ public class Tuning extends SelectableOpMode {
                 l.add("Forward Tuner", ForwardTuner::new);
                 l.add("Lateral Tuner", LateralTuner::new);
                 l.add("Turn Tuner", TurnTuner::new);
+                l.add("Motor Test", MotorTest::new);
             });
             s.folder("Automatic", a -> {
                 a.add("Forward Velocity Tuner", ForwardVelocityTuner::new);
@@ -77,8 +89,12 @@ public class Tuning extends SelectableOpMode {
 
     @Override
     public void onSelect() {
+        if (robot == null) {
+            robot = Robot.getInstance();
+            robot.init(this);
+        }
         if (follower == null) {
-            follower = Constants.createFollower(hardwareMap);
+            follower = robot.drive.getFollower();
             PanelsConfigurables.INSTANCE.refreshClass(this);
         } else {
             follower = Constants.createFollower(hardwareMap);
@@ -208,6 +224,70 @@ class ForwardTuner extends OpMode {
         telemetryM.update(telemetry);
 
         draw();
+    }
+}
+
+class MotorTest extends OpMode {
+    MotorEx backRightMotor;
+    MotorEx backLeftMotor;
+    MotorEx frontRightMotor;
+    MotorEx frontLeftMotor;
+
+    @Override
+    public void init() {
+        follower.update();
+        backRightMotor = robot.drive.getBackRightMotor();
+        backLeftMotor = robot.drive.getBackLeftMotor();
+        frontRightMotor = robot.drive.getFrontRightMotor();
+        frontLeftMotor = robot.drive.getFrontLeftMotor();
+    }
+
+    /** This initializes the PoseUpdater as well as the Panels telemetry. */
+    @Override
+    public void init_loop() {
+        telemetryM.debug("Run your robots Motors\nA: Front Right\nB: Back Right\nX: Front Left\nY: Back Left");
+        telemetryM.update(telemetry);
+    }
+
+    /**
+     * This updates the robot's pose estimate, and updates the Panels telemetry with the
+     * calculated multiplier and draws the robot.
+     */
+    @Override
+    public void loop() {
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> {
+            telemetryM.debug("\n\nA Button Pressed Running FRONT RIGHT");
+            frontRightMotor.motor.setPower(.5);
+        }));
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.A).whenReleased(new InstantCommand(()-> {
+            frontRightMotor.motor.setPower(0);
+        }));
+
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> {
+            telemetryM.debug("\n\nA Button Pressed Running BACK RIGHT");
+            backRightMotor.motor.setPower(.5);
+        }));
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.B).whenReleased(new InstantCommand(()-> {
+            backRightMotor.motor.setPower(0);
+        }));
+
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> {
+            telemetryM.debug("\n\nA Button Pressed Running FRONT LEFT");
+            frontLeftMotor.motor.setPower(.5);
+        }));
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.X).whenReleased(new InstantCommand(()-> {
+            frontLeftMotor.motor.setPower(0);
+        }));
+
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> {
+            telemetryM.debug("\n\nA Button Pressed Running BACK LEFT");
+            backLeftMotor.motor.setPower(.5);
+        }));
+        Bindings.getDriverGamepad().getGamepadButton(GamepadKeys.Button.Y).whenReleased(new InstantCommand(()-> {
+            backLeftMotor.motor.setPower(0);
+        }));
+
+        telemetryM.update(telemetry);
     }
 }
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import static org.firstinspires.ftc.teamcode.globals.Constants.*;
 import static org.firstinspires.ftc.teamcode.pedroPathing.Constants.*;
 
 import com.pedropathing.follower.Follower;
@@ -7,6 +8,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathBuilder;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -34,8 +36,18 @@ public class Drive extends SubsystemBase {
     private double strafe;
     private double turn;
 
+    private MotorEx frontRightMotor;
+    private MotorEx frontLeftMotor;
+    private MotorEx backLeftMotor;
+    private MotorEx backRightMotor;
+
     public Drive(HardwareMap hwMap){
         follower = createFollower(hwMap);
+        this.frontRightMotor = new MotorEx(hwMap, FRONT_RIGHT_MOTOR);
+        this.frontLeftMotor = new MotorEx(hwMap, FRONT_LEFT_MOTOR);
+        this.backLeftMotor = new MotorEx(hwMap, BACK_LEFT_MOTOR);
+        this.backRightMotor = new MotorEx(hwMap, BACK_RIGHT_MOTOR);
+
     }
 
     public void driveFieldCentric(double forward, double strafe, double turn) {
@@ -100,5 +112,21 @@ public class Drive extends SubsystemBase {
 
     public void setCurrentPose(Pose currentPose) {
         this.currentPose = currentPose;
+    }
+
+    public MotorEx getFrontRightMotor() {
+        return frontRightMotor;
+    }
+
+    public MotorEx getFrontLeftMotor() {
+        return frontLeftMotor;
+    }
+
+    public MotorEx getBackLeftMotor() {
+        return backLeftMotor;
+    }
+
+    public MotorEx getBackRightMotor() {
+        return backRightMotor;
     }
 }
