@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.command;
 
+import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_SPEED;
 import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_TIME;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
@@ -33,6 +34,7 @@ public class ShooterFireCommand extends CommandBase {
             System.out.println("MOLLIE: STARTING SERVO");
             //shooter.spinServo();
         }
+        shooter.setSpeed(SHOOTER_SPEED);
         shooter.shoot();
     }
 
