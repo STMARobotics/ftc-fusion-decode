@@ -26,15 +26,18 @@ android {
 repositories {
     maven {url "https://repo.dairy.foundation/releases"}
     maven {url 'https://repo.dairy.foundation/snapshots'}
-    maven { url 'https://maven.pedropathing.com'}
+    maven { url = "https://mymaven.bylazar.com/releases" }
 }
 dependencies {
     implementation project(':FtcRobotController')
 
 //    Solverslib
-    implementation "org.solverslib:core:SNAPSHOT-7cdcc66"
+    implementation "org.solverslib:core:0.3.3" // core
+    implementation "org.solverslib:pedroPathing:0.3.3"
 //    implementation "org.solverslib:pedropathing:SNAPSHOT-7cdcc66"
 
 //    Pedropathing
-
+    implementation 'com.pedropathing:ftc:2.0.3'
+    implementation 'com.pedropathing:telemetry:1.0.0'
+    implementation 'com.bylazar:fullpanels:1.0.6'
 }

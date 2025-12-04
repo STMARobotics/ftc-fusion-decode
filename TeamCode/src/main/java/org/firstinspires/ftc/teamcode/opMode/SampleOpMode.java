@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opMode;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 
@@ -29,6 +30,9 @@ public class SampleOpMode extends CommandOpMode {
 
         // Initialize the robot (which also registers subsystems, configures CommandScheduler, etc.)
         robot.init(this);
+        robot.drive.getFollower().setStartingPose(new Pose());
+        robot.drive.getFollower().update();
+        robot.drive.getFollower().startTeleOpDrive();
     }
 
     @Override

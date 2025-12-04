@@ -14,12 +14,13 @@ public class Shooter extends SubsystemBase {
     private final MotorEx shooterMotor;
     private final CRServoEx shooterServo;
 
+    private double shooterSpeed = SHOOTER_SPEED;
     public Shooter(HardwareMap hwmap) {
         this.shooterMotor = new MotorEx(hwmap, SHOOTER_MOTOR);
         this.shooterServo = new CRServoEx(hwmap,SHOOTER_SERVO);
     }
     public void shoot(){
-        shooterMotor.set(SHOOTER_SPEED);
+        shooterMotor.set(shooterSpeed);
     }
     public void spinServo(){
         shooterServo.set(-INTAKE_SPEED);
@@ -28,5 +29,13 @@ public class Shooter extends SubsystemBase {
     public void stop(){
         shooterMotor.set(SHOOTER_STOP);
         shooterServo.set(INTAKE_STOP);
+    }
+
+    public void setSpeed(double speed){
+        shooterSpeed = speed;
+    }
+
+    public MotorEx getShooterMotor() {
+        return shooterMotor;
     }
 }
