@@ -34,4 +34,8 @@ public class Shooter extends SubsystemBase {
     public void setSpeed(double speed){
         shooterSpeed = speed;
     }
+
+    public MotorEx getShooterMotor() {
+        return shooterMotor;
+    }
 }

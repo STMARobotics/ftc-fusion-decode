@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_TIME;
 import com.seattlesolvers.solverslib.command.CommandBase;
 
 
+import org.firstinspires.ftc.teamcode.globals.Robot;
 import org.firstinspires.ftc.teamcode.subsystem.*;
 
 public class ShooterFireCommand extends CommandBase {
@@ -36,6 +37,7 @@ public class ShooterFireCommand extends CommandBase {
         }
         shooter.setSpeed(SHOOTER_SPEED);
         shooter.shoot();
+        Robot.getInstance().telemetryData.addData("Shooter Speed Velocity", shooter.getShooterMotor().getVelocity());
     }
 
 
