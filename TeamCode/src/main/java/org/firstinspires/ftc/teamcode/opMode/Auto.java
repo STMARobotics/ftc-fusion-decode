@@ -50,8 +50,9 @@ public class Auto extends CommandOpMode {
         follower.setStartingPose(startPose);
         schedule(
                 new RunCommand(()-> follower.update()),
-                new HoldPointCommand(follower, new Pose(0,4,0),true)
-//                new HoldPointCommand(follower,new Pose(12, 4, Math.toRadians(90)), false)
+                new HoldPointCommand(follower, new Pose(4, 0, 0), false)
+//                new HoldPointCommand(follower, new Pose(0,4,0),true),
+//                new HoldPointCommand(follower,new Pose(12, 4, Math.toRadians(90)), false),
 //                new TurnCommand(follower, Math.PI /2 , false),
 //                new TurnCommand(follower, 90.0, true, AngleUnit.DEGREES),
 //                new TurnToCommand(follower, Math.PI /2),
