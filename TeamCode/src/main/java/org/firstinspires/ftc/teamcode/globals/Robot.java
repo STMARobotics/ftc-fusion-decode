@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.globals;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -31,6 +32,8 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
     public Drive drive;
     public Intake intake;
     public Shooter shooter;
+    public SparkFunOTOS otos;
+
 
     public static Robot getInstance() {
         return instance;
@@ -46,6 +49,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         this.drive = new Drive(hwMap);
         this.intake = new Intake(hwMap);
         this.shooter = new Shooter(hwMap);
+        this.otos = (SparkFunOTOS) hwMap.get("Spark");
 
         register(drive, intake, shooter);
 
