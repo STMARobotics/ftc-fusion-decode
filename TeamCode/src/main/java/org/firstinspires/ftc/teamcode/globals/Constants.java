@@ -18,9 +18,12 @@ public class Constants {
     public static final double MINIMUM_SPEED = 0.5;
     public static final double INTAKE_SPEED = 1;
     public static final double INTAKE_STOP = 0;
-    public static double SHOOTER_SPEED = -0.91;
+    public static double SHOOTER_SPEED = -1;
     public static final double SHOOTER_STOP = 0;
     public static long SHOOTER_TIME = 250;
+    public static double MIN_VELOCITY_PERCENTAGE = .95;
+    public static int SHOOTING_VELOCITY = -2184;
+    public static double MIN_VELOCITY = SHOOTING_VELOCITY * MIN_VELOCITY_PERCENTAGE;
 
     // Hardware Names
     public static final String FRONT_RIGHT_MOTOR = "FrontRightMotor";

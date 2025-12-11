@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.command;
 
+import static org.firstinspires.ftc.teamcode.globals.Constants.MIN_VELOCITY;
 import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_SPEED;
 import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_TIME;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
 
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.globals.Robot;
 import org.firstinspires.ftc.teamcode.subsystem.*;
 
@@ -31,9 +33,10 @@ public class ShooterFireCommand extends CommandBase {
     public void execute(){
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println("MOLLIE: Current Time: " + currentTimeMillis + " Time To Start Servo: " + startTimeMillis);
-        if (currentTimeMillis >= startTimeMillis) {
+
+        if (shooter.getShooterMotor().getVelocity() <= -2184) {
             System.out.println("MOLLIE: STARTING SERVO");
-            //shooter.spinServo();
+            shooter.spinServo();
         }
         shooter.setSpeed(SHOOTER_SPEED);
         shooter.shoot();

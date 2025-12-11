@@ -26,9 +26,6 @@ public class Auto extends CommandOpMode {
 
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private final Robot robot = Robot.getInstance();
-    private final Pose startPose = new Pose(0, 0, Math.toRadians(0));
-    private final Pose endPose = new Pose(12, 0, Math.toRadians(0));
-    private final Pose turnPose = new Pose(12, 0, Math.toRadians(90));
 
     private PathChain myPath;
     @Override
@@ -43,27 +40,31 @@ public class Auto extends CommandOpMode {
         robot.init(this);
 
         myPath = robot.drive.pathBuilder()
-                .addPath(new BezierLine(new Pose(55.3846, 88.61, Math.toRadians(90)), new Pose(53.30, 88.61, Math.toRadians(140))))
-                .addPath(new BezierLine(new Pose(53.30, 88.61, Math.toRadians(140)), new Pose(38.38, 33.49, Math.toRadians(180))))
-                .addPath(new BezierLine(new Pose(38.38, 33.49, Math.toRadians(270)), new Pose(4.38, 33.49, Math.toRadians(180))))
-                .addPath(new BezierLine(new Pose(4.38, 33.49, Math.toRadians(180)), new Pose(38.38, 33.49, Math.toRadians(180))))
-                .addPath(new BezierLine(new Pose(38.38, 33.49, Math.toRadians(270)), new Pose(53.32, 88.1, Math.toRadians(140))))
+                .addPath(new BezierLine(new Pose(14, 126,  Math.toRadians(90)),  new Pose(56,48, Math.toRadians(90))))
+//                .addPath(new BezierLine(new Pose(51, 93, Math.toRadians(140)), new Pose(37, 34, Math.toRadians(180))))
+//                .addPath(new BezierLine(new Pose(37, 34, Math.toRadians(180)), new Pose(12, 35, Math.toRadians(180))))
+//                .addPath(new BezierLine(new Pose(12, 35, Math.toRadians(180)), new Pose(51, 94, Math.toRadians(180))))
+//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 60, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(37, 60, Math.toRadians(270)), new Pose(10, 59, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(10, 59, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 84, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(37, 84, Math.toRadians(270)), new Pose(12, 84, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(12, 84, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
+//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(24, 5, Math.toRadians(140))))
+
+
+
+
+
+
 
                 .build();
 
         Follower follower = robot.drive.getFollower();
-        follower.setStartingPose(startPose);
+//        follower.setStartingPose(startPose);
         schedule(
                 new RunCommand(()-> follower.update()),
-                new FollowPathCommand(follower, myPath).setGlobalMaxPower(.5)
-//                new FollowPathCommand(follower, myPath2)
-//                new HoldPointCommand(follower, new Pose(4, 0, 0), false)
-//                new HoldPointCommand(follower, new Pose(0,4,0),true),
-//                new HoldPointCommand(follower,new Pose(12, 4, Math.toRadians(90)), false),
-//                new TurnCommand(follower, Math.PI /2 , false),
-//                new TurnCommand(follower, 90.0, true, AngleUnit.DEGREES).
-//                new TurnToCommand(follower, Math.PI /2),
-//                new TurnToCommand(follower, 90.0, AngleUnit.DEGREES)
+                new FollowPathCommand(follower, myPath, false, .5).setGlobalMaxPower(.5)
                 );
     }
 
