@@ -45,9 +45,16 @@ public class Bindings {
     public static DoubleSupplier getDriverRightTrigger() {
         return () -> INSTANCE.driverGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
     }
+    public static DoubleSupplier getDriverLeftTrigger() {
+        return () -> INSTANCE.driverGamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+    }
 
     public static GamepadButton getOperatorButtonA(){
        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.A);
+    }
+
+    public static GamepadButton getDriverButtonA(){
+        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.A);
     }
 
     public static Trigger getOperatorLeftTrigger(){
@@ -64,6 +71,9 @@ public class Bindings {
         });
     }
     public static GamepadButton getOperatorLeftBumper(){
+        return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
+    }
+    public static GamepadButton getDriverLeftBumper(){
         return INSTANCE.operatorGamepad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
     }
 
