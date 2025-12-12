@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.globals.Constants;
 import org.firstinspires.ftc.teamcode.globals.Robot;
 
 @TeleOp(name = "Driver Controlled")
-public class SampleOpMode extends CommandOpMode {
+public class OpMode extends CommandOpMode {
 
     public GamepadEx driverGamepad;
     public GamepadEx operatorGamepad;

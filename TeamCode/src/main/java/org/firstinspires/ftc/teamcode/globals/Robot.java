@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.globals;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.command.IntakeSpinInCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeSpinOutCommand;
 import org.firstinspires.ftc.teamcode.command.IntakeStopCommand;
 import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
+import org.firstinspires.ftc.teamcode.command.ShooterReverseCommand;
 import org.firstinspires.ftc.teamcode.controls.Bindings;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -31,6 +33,8 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
     public Drive drive;
     public Intake intake;
     public Shooter shooter;
+    public SparkFunOTOS otos;
+
 
     public static Robot getInstance() {
         return instance;
@@ -46,6 +50,7 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         this.drive = new Drive(hwMap);
         this.intake = new Intake(hwMap);
         this.shooter = new Shooter(hwMap);
+        this.otos = (SparkFunOTOS) hwMap.get("Spark");
 
         register(drive, intake, shooter);
 
@@ -67,7 +72,6 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
                 Bindings.getDriverLeftX(),
                 Bindings.getDriverRightX(),
                 Bindings.getDriverRightTrigger()
-
         );
 
 
@@ -78,6 +82,9 @@ public class Robot extends com.seattlesolvers.solverslib.command.Robot {
         Bindings.getOperatorLeftBumper().whenPressed(new IntakeSpinOutCommand(intake));
         Bindings.getOperatorLeftBumper().whenReleased(new IntakeStopCommand(intake));
         ShooterFireCommand fireCommand = new ShooterFireCommand(shooter);
+        ShooterReverseCommand reverseCommand = new ShooterReverseCommand(shooter);
+        Bindings.getOperatorButtonA().whenPressed(reverseCommand);
+        Bindings.getOperatorButtonA().whenReleased(reverseCommand::stop);
         Bindings.getOperatorRightTrigger().whenActive(fireCommand);
         Bindings.getOperatorRightTrigger().whenInactive(new InstantCommand(fireCommand::stop));
 

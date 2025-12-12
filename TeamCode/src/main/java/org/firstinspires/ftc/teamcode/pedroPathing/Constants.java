@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import static org.firstinspires.ftc.teamcode.globals.Constants.*;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
@@ -18,6 +19,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Configurable
 public class Constants {
     public static OTOSConstants localizerConstants;
 
@@ -26,7 +28,7 @@ public class Constants {
                 .hardwareMapName("Spark")
                 .linearUnit(DistanceUnit.INCH)
                 .angleUnit(AngleUnit.RADIANS)
-                .offset(new SparkFunOTOS.Pose2D(1, -5, Math.toRadians(180)))
+                .offset(new SparkFunOTOS.Pose2D(1, -5, Math.toRadians(0)))
                 .linearScalar(97.44084292682993)
                 .angularScalar(-0.9842570182);
 
@@ -38,10 +40,10 @@ public class Constants {
             .rightRearMotorName(BACK_RIGHT_MOTOR)
             .leftRearMotorName(BACK_LEFT_MOTOR)
             .leftFrontMotorName(FRONT_LEFT_MOTOR)
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
+            .leftFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .leftRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .rightFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
+            .rightRearMotorDirection(DcMotorSimple.Direction.REVERSE);
 
 
     public static FollowerConstants followerConstants = new FollowerConstants()
@@ -49,7 +51,7 @@ public class Constants {
 //            .forwardZeroPowerAcceleration(-58.742)
 //            .lateralZeroPowerAcceleration(-82.934)
             .translationalPIDFCoefficients(new PIDFCoefficients(0.2, 0, 0.0, 0))
-            .headingPIDFCoefficients(new PIDFCoefficients(0.0, 0, 0.0, 0));
+            .headingPIDFCoefficients(new PIDFCoefficients(1.0, 0, 0.0, 0));
 
 
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
