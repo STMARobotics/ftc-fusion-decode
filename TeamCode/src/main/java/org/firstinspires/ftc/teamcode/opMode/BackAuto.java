@@ -49,7 +49,7 @@ public class BackAuto extends CommandOpMode {
         // Initialize the robot (which also registers subsystems, configures CommandScheduler, etc.)
         robot.init(this);
         Pose startingPose = createPose(startingX, startingY, startingAngle);
-        Pose shootingPose = createPose(startingX, shootingY, shootingAngle);
+        Pose shootingPose = createPose(shootingX, shootingY, shootingAngle);
 
         BlueShootLine = robot.drive.pathBuilder()
                 .addPath(new BezierLine(startingPose, shootingPose))
