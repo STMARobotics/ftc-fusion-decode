@@ -30,6 +30,9 @@ public class BackAuto extends CommandOpMode {
     int startingX = 24;
     int startingY = 127;
     int startingAngle = 140;
+    int shootingX = 24;
+    int shootingY = 87;
+    int shootingAngle = 140;
     int xChange = -startingX;
     int yChange = -startingY;
     int angleChange = -startingAngle;
@@ -46,46 +49,17 @@ public class BackAuto extends CommandOpMode {
         // Initialize the robot (which also registers subsystems, configures CommandScheduler, etc.)
         robot.init(this);
         Pose startingPose = createPose(startingX, startingY, startingAngle);
-//        Pose shootingPose = createPose(58, 93, startingAngle);
-        Pose shootingPose = createPose(startingX, startingY - 40, startingAngle);
-        BlueShootLine = robot.drive.pathBuilder()
-//                .addPath(new BezierLine(new Pose(0, 0,  Math.toRadians(-40)),  new Pose(61 + xChange,96 + yChange, Math.toRadians(-40))))
-                .addPath(new BezierLine(startingPose,  shootingPose))
-                .setLinearHeadingInterpolation(startingPose.getHeading(), shootingPose.getHeading(), .8)
-
-//                .addPath(new BezierLine(new Pose(51, 93, Math.toRadians(140)), new Pose(37, 34, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(37, 34, Math.toRadians(180)), new Pose(12, 35, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(12, 35, Math.toRadians(180)), new Pose(51, 94, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 60, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 60, Math.toRadians(270)), new Pose(10, 59, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(10, 59, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 84, Math.toRadians(270)), new Pose(12, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(12, 84, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(24, 5, Math.toRadians(140))))
-                .build();
+        Pose shootingPose = createPose(startingX, shootingY, shootingAngle);
 
         BlueShootLine = robot.drive.pathBuilder()
-//                .addPath(new BezierLine(new Pose(0, 0,  Math.toRadians(-40)),  new Pose(61 + xChange,96 + yChange, Math.toRadians(-40))))
                 .addPath(new BezierLine(startingPose, shootingPose))
                 .setLinearHeadingInterpolation(startingPose.getHeading(), shootingPose.getHeading(), .8)
-
-//                .addPath(new BezierLine(new Pose(51, 93, Math.toRadians(140)), new Pose(37, 34, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(37, 34, Math.toRadians(180)), new Pose(12, 35, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(12, 35, Math.toRadians(180)), new Pose(51, 94, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 60, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 60, Math.toRadians(270)), new Pose(10, 59, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(10, 59, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 84, Math.toRadians(270)), new Pose(12, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(12, 84, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(24, 5, Math.toRadians(140))))
                 .build();
 
         Follower follower = robot.drive.getFollower();
         ShooterFireCommand shooterFireCommand = new ShooterFireCommand(robot.shooter);
         IntakeSpinInCommand intakeSpinInCommand = new IntakeSpinInCommand(robot.intake);
-        Command shoot = new ParallelCommandGroup(
+        Command autoShoot = new ParallelCommandGroup(
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
                         new WaitCommand(1500),
@@ -106,7 +80,7 @@ public class BackAuto extends CommandOpMode {
         schedule(
                 new RunCommand(follower::update),
                 new FollowPathCommand(startingPose, BlueShootLine, robot.drive).withGlobalMaxPower(.5),
-                shoot
+                autoShoot
                 );
     }
 
