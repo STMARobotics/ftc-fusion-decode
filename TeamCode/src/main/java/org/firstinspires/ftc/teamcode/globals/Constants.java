@@ -21,7 +21,7 @@ public class Constants {
     public static final double INTAKE_STOP = 0;
     public static double MAX_VELOCITY = -2184;
     public static double SHOOTER_SPEED_POWER = -0.92;
-    public static double SHOOTER_SPEED_VELOCITY = -2100;
+    public static double SHOOTER_SPEED_VELOCITY = -2184;
     public static final double SHOOTER_STOP = 0;
     public static long SHOOTER_TIME = 250;
     public static double MIN_VELOCITY_PERCENTAGE = .95;

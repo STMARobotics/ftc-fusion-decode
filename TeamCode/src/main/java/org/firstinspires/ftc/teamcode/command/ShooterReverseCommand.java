@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.command;
 
-import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_SPEED;
+import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_SPEED_POWER;
 import static org.firstinspires.ftc.teamcode.globals.Constants.SHOOTER_TIME;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
@@ -31,7 +31,7 @@ public class ShooterReverseCommand extends CommandBase {
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println("MOLLIE: Current Time: " + currentTimeMillis + " Time To Start Servo: " + startTimeMillis);
 
-        shooter.setSpeed(-SHOOTER_SPEED);
+        shooter.setSpeed(-SHOOTER_SPEED_POWER);
         shooter.shoot();
         Robot.getInstance().telemetryData.addData("Shooter Speed " +
                 "Velocity", shooter.getShooterMotor().getVelocity());
