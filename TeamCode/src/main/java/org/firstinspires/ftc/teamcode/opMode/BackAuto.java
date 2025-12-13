@@ -30,7 +30,7 @@ public class BackAuto extends CommandOpMode {
     int PAUSE_TO_START_SHOOTER = 1500;
     int PAUSE_TO_STOP_SHOOTER = 8000;
     int PAUSE_TO_START_INTAKE = 5000;
-    int PAUSE_TO_STOP_INTAKE = 2000;
+    int PAUSE_TO_STOP_INTAKE = 10000;
 
 
     int startingX = 24;

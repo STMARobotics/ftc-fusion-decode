@@ -30,7 +30,7 @@ public class BlueFrontAuto extends CommandOpMode {
     int PAUSE_TO_START_SHOOTER = 2500;
     int PAUSE_TO_STOP_SHOOTER = 10000;
     int PAUSE_TO_START_INTAKE = 7000;
-    int PAUSE_TO_STOP_INTAKE = 2000;
+    int PAUSE_TO_STOP_INTAKE = 5000;
 
     int startingY = 90;
     int startingX = 10;
