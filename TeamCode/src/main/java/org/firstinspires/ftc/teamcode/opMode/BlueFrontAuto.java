@@ -21,24 +21,24 @@ import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
 import org.firstinspires.ftc.teamcode.globals.Constants;
 import org.firstinspires.ftc.teamcode.globals.Robot;
 
-@Autonomous(name = "Back Auto", preselectTeleOp = "Driver Controlled")
-public class BackAuto extends CommandOpMode {
+@Autonomous(name = "BLUE Front Auto", preselectTeleOp = "Driver Controlled")
+public class BlueFrontAuto extends CommandOpMode {
 
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private final Robot robot = Robot.getInstance();
 
-    int PAUSE_TO_START_SHOOTER = 1500;
-    int PAUSE_TO_STOP_SHOOTER = 8000;
-    int PAUSE_TO_START_INTAKE = 5000;
+    int PAUSE_TO_START_SHOOTER = 2500;
+    int PAUSE_TO_STOP_SHOOTER = 10000;
+    int PAUSE_TO_START_INTAKE = 7000;
     int PAUSE_TO_STOP_INTAKE = 2000;
 
+    int startingY = 90;
+    int startingX = 10;
+    int startingAngle = 90;
+    int shootingY = 92;
+    int shootingX = 85;
+    int shootingAngle = 143;
 
-    int startingX = 24;
-    int startingY = 127;
-    int startingAngle = 140;
-    int shootingX = 24;
-    int shootingY = 87;
-    int shootingAngle = 140;
     int xChange = -startingX;
     int yChange = -startingY;
     int angleChange = -startingAngle;
@@ -56,7 +56,6 @@ public class BackAuto extends CommandOpMode {
         robot.init(this);
         Pose startingPose = createPose(startingX, startingY, startingAngle);
         Pose shootingPose = createPose(shootingX, shootingY, shootingAngle);
-
         BlueShootLine = robot.drive.pathBuilder()
                 .addPath(new BezierLine(startingPose, shootingPose))
                 .setLinearHeadingInterpolation(startingPose.getHeading(), shootingPose.getHeading(), .8)
@@ -65,28 +64,28 @@ public class BackAuto extends CommandOpMode {
         Follower follower = robot.drive.getFollower();
         ShooterFireCommand shooterFireCommand = new ShooterFireCommand(robot.shooter);
         IntakeSpinInCommand intakeSpinInCommand = new IntakeSpinInCommand(robot.intake);
-        Command autoShoot = new ParallelCommandGroup(
+        Command shoot = new ParallelCommandGroup(
                 new ParallelCommandGroup(
-                    new SequentialCommandGroup(
-                        new WaitCommand(PAUSE_TO_START_SHOOTER),
-                        shooterFireCommand
-                    ),
-                    new SequentialCommandGroup(
-                        new WaitCommand(PAUSE_TO_STOP_SHOOTER),
-                        new InstantCommand(shooterFireCommand::stop)
-                    ),
-                    new SequentialCommandGroup(
-                        new WaitCommand(PAUSE_TO_START_INTAKE),
-                        intakeSpinInCommand,
-                        new WaitCommand(PAUSE_TO_STOP_INTAKE),
-                        new IntakeStopCommand(robot.intake)
-                    )
+                        new SequentialCommandGroup(
+                                new WaitCommand(PAUSE_TO_START_SHOOTER),
+                                shooterFireCommand
+                        ),
+                        new SequentialCommandGroup(
+                                new WaitCommand(PAUSE_TO_STOP_SHOOTER),
+                                new InstantCommand(shooterFireCommand::stop)
+                        ),
+                        new SequentialCommandGroup(
+                                new WaitCommand(PAUSE_TO_START_INTAKE),
+                                intakeSpinInCommand,
+                                new WaitCommand(PAUSE_TO_STOP_INTAKE),
+                                new IntakeStopCommand(robot.intake)
+                        )
                 )
         );
         schedule(
                 new RunCommand(follower::update),
-                new FollowPathCommand(startingPose, BlueShootLine, robot.drive).withGlobalMaxPower(.5),
-                autoShoot
+                new FollowPathCommand(startingPose, BlueShootLine, robot.drive).withGlobalMaxPower(.7),
+                shoot
                 );
     }
 
