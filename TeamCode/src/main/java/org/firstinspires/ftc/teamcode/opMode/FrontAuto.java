@@ -4,7 +4,6 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -22,15 +21,19 @@ import org.firstinspires.ftc.teamcode.command.ShooterFireCommand;
 import org.firstinspires.ftc.teamcode.globals.Constants;
 import org.firstinspires.ftc.teamcode.globals.Robot;
 
-@Autonomous(name = "Back Auto", preselectTeleOp = "SampleOpMode")
-public class Auto extends CommandOpMode {
+@Autonomous(name = "Front Auto", preselectTeleOp = "SampleOpMode")
+public class FrontAuto extends CommandOpMode {
 
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private final Robot robot = Robot.getInstance();
 
-    int startingX = 24;
-    int startingY = 127;
-    int startingAngle = 140;
+    int startingX = 90;
+    int startingY = 10;
+    int startingAngle = 90;
+    int shootingX = 88;
+    int shootingY = 115;
+    int shootingAngle = 37;
+
     int xChange = -startingX;
     int yChange = -startingY;
     int angleChange = -startingAngle;
@@ -48,39 +51,10 @@ public class Auto extends CommandOpMode {
         robot.init(this);
         Pose startingPose = createPose(startingX, startingY, startingAngle);
 //        Pose shootingPose = createPose(58, 93, startingAngle);
-        Pose shootingPose = createPose(startingX, startingY - 40, startingAngle);
+        Pose shootingPose = createPose(shootingX, shootingY, shootingAngle);
         BlueShootLine = robot.drive.pathBuilder()
-//                .addPath(new BezierLine(new Pose(0, 0,  Math.toRadians(-40)),  new Pose(61 + xChange,96 + yChange, Math.toRadians(-40))))
-                .addPath(new BezierLine(startingPose,  shootingPose))
-                .setLinearHeadingInterpolation(startingPose.getHeading(), shootingPose.getHeading(), .8)
-
-//                .addPath(new BezierLine(new Pose(51, 93, Math.toRadians(140)), new Pose(37, 34, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(37, 34, Math.toRadians(180)), new Pose(12, 35, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(12, 35, Math.toRadians(180)), new Pose(51, 94, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 60, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 60, Math.toRadians(270)), new Pose(10, 59, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(10, 59, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 84, Math.toRadians(270)), new Pose(12, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(12, 84, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(24, 5, Math.toRadians(140))))
-                .build();
-
-        BlueShootLine = robot.drive.pathBuilder()
-//                .addPath(new BezierLine(new Pose(0, 0,  Math.toRadians(-40)),  new Pose(61 + xChange,96 + yChange, Math.toRadians(-40))))
                 .addPath(new BezierLine(startingPose, shootingPose))
                 .setLinearHeadingInterpolation(startingPose.getHeading(), shootingPose.getHeading(), .8)
-
-//                .addPath(new BezierLine(new Pose(51, 93, Math.toRadians(140)), new Pose(37, 34, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(37, 34, Math.toRadians(180)), new Pose(12, 35, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(12, 35, Math.toRadians(180)), new Pose(51, 94, Math.toRadians(180))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 60, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 60, Math.toRadians(270)), new Pose(10, 59, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(10, 59, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(37, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(37, 84, Math.toRadians(270)), new Pose(12, 84, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(12, 84, Math.toRadians(270)), new Pose(51, 94, Math.toRadians(140))))
-//                .addPath(new BezierLine(new Pose(51, 94, Math.toRadians(270)), new Pose(24, 5, Math.toRadians(140))))
                 .build();
 
         Follower follower = robot.drive.getFollower();
